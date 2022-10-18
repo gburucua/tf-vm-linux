@@ -86,4 +86,3 @@ resource "azurerm_linux_virtual_machine" "gbtest" {
     version   = "latest"
   }
 }
-
