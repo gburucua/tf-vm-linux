@@ -72,7 +72,7 @@ resource "azurerm_linux_virtual_machine" "gbtest" {
 
   admin_ssh_key {
     username   = "gburucua"
-    public_key = file("~/.ssh/id_rsa.pub")
+    public_key = var.my_public_key
   }
 
   network_interface_ids = [

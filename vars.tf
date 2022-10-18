@@ -5,3 +5,5 @@ variable "location" {
 }
 
 variable "name" {}
+
+variable "my_public_key" {}
