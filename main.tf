@@ -51,10 +51,10 @@ resource "azurerm_network_interface" "example" {
   resource_group_name = azurerm_resource_group.gbtest_rg.name
 
   ip_configuration {
-    name                          = "external"
+    name                          = "internal"
     subnet_id                     = azurerm_subnet.example.id
-#   private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = "Dynamic"
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.public_ip.id
   }
 }
 
