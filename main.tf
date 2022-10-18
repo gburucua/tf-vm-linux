@@ -29,6 +29,7 @@ resource "azurerm_network_security_group" "ssh" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+}
 
 resource "azurerm_virtual_network" "example" {
   name                = "example-network"
