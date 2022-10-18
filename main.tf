@@ -6,6 +6,30 @@ resource "azurerm_resource_group" "gbtest_rg" {
   }
 }
 
+resource "azurerm_public_ip" "public_ip" {
+  name                = "acceptanceTestPublicIp1"
+  resource_group_name = azurerm_resource_group.gbtest_rg.name
+  location            = azurerm_resource_group.gbtest_rg.location
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_security_group" "ssh" {
+  name                = "acceptanceTestSecurityGroup1"
+  location            = azurerm_resource_group.gbtest_rg.location
+  resource_group_name = azurerm_resource_group.gbtest_rg.name
+
+  security_rule {
+    name                       = "openssh"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
 resource "azurerm_virtual_network" "example" {
   name                = "example-network"
   address_space       = ["10.0.0.0/16"]
@@ -26,9 +50,10 @@ resource "azurerm_network_interface" "example" {
   resource_group_name = azurerm_resource_group.gbtest_rg.name
 
   ip_configuration {
-    name                          = "internal"
+    name                          = "external"
     subnet_id                     = azurerm_subnet.example.id
-    private_ip_address_allocation = "Dynamic"
+#   private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = "Dynamic"
   }
 }
 
