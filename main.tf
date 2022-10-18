@@ -29,6 +29,7 @@ resource "azurerm_network_security_group" "ssh" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+}
 
 resource "azurerm_virtual_network" "example" {
   name                = "example-network"
@@ -50,10 +51,10 @@ resource "azurerm_network_interface" "example" {
   resource_group_name = azurerm_resource_group.gbtest_rg.name
 
   ip_configuration {
-    name                          = "external"
+    name                          = "internal"
     subnet_id                     = azurerm_subnet.example.id
-#   private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          = "Dynamic"
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.public_ip.id
   }
 }
 
@@ -70,7 +71,7 @@ resource "azurerm_linux_virtual_machine" "gbtest" {
   }
 
   admin_ssh_key {
-    username   = "gburucua"
+    username   = "adminuser"
     public_key = file("~/.ssh/id_rsa.pub")
   }
 
@@ -85,4 +86,3 @@ resource "azurerm_linux_virtual_machine" "gbtest" {
     version   = "latest"
   }
 }
-
