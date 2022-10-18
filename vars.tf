@@ -5,8 +5,3 @@ variable "location" {
 }
 
 variable "name" {}
-
-variable "my_public_key" {
-  type = string
-  default = "gbazure"
-}
